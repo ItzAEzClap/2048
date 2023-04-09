@@ -1,0 +1,226 @@
+:root {
+    --gameBorder: rgb(187, 173, 160);
+    --gameBackground: rgb(205, 193, 180);
+    --scoreText: rgb(238, 228, 218);
+    --title: rgb(119, 110, 101);
+    --newGame: rgb(143, 122, 102);
+    --activeNewGame: rgb(135, 115, 90);
+    --min: min(1vh, 1vw);
+    --border: calc(0.03 * 75 * var(--min)) /* Game Size To Border Ratio */
+}
+
+body {
+    margin: 0;
+    overflow: hidden;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+/*Container*/
+#container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(250,248,239);
+    user-select: none;
+}
+
+#game-container {
+    width: 500px;
+    height: 500px;
+    margin-top: 30px;
+}
+
+#grid-container {
+    display: grid;
+    grid-template-columns: repeat(1fr);
+    width: 470px;
+    height: 470px;
+    border: 15px solid var(--gameBorder);
+    border-radius: 15px;
+    z-index: 1;
+}
+
+.grid-row {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#grid-container > :not(:last-child) {
+    border-bottom: 15px solid var(--gameBorder);
+}
+
+.grid-cell {
+    background-color: var(--gameBackground);
+    width: 100%;
+    height: 100%;
+}
+
+.grid-row > :not(:last-child) {
+    border-right: 15px solid var(--gameBorder);
+}
+
+#game-header {
+    display: flex;
+    width: 500px;
+    height: 100px;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 30px;
+}
+
+#game-header > h1 {
+    color: var(--title);
+    font-size: 5rem;
+}
+
+.restart {
+    all: unset;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    border: 2px solid var(--newGame);
+    border-radius: 5px;
+    background-color: var(--newGame);
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.restart:hover {
+    cursor: pointer;
+    border: 2px solid var(--title);
+}
+
+.restart:active {
+    background-color: var(--activeNewGame);
+}
+
+.game-tile {
+    position: absolute;
+    display: flex;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    width: 106.25px;
+    height: 106.25px;
+    z-index: 10;
+    font-size: 65px;
+}
+
+.score-container {
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 40px;
+    padding-left: 100px;
+    width: 100%;
+    gap: 5px;
+}
+
+.score-container > * {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    width: 50%;
+    min-width: 100px;
+    color: white;
+    background-color: var(--gameBorder);
+    border-radius: 5px;
+    width: fit-content;
+}
+
+#current-score::before {
+    font-size: 15px;
+    font-weight: bold;
+    content: "SCORE";
+    color: var(--scoreText);
+}
+
+#best-score::before {
+    font-size: 15px;
+    font-weight: bold;
+    content: "BEST";
+    color: var(--scoreText);
+}
+
+
+@media (max-width: 550px), (max-height: 550px) {
+    #game-container {
+        width: 75 * var(--min);
+        height: 75 * var(--min);
+        margin-top: calc(2 * var(--min));
+    }
+    #grid-container {
+        width: calc(75 * var(--min) - 30px);
+        height: calc(75 * var(--min) - 30px);
+        border: var(--border) solid var(--gameBorder);
+        border-radius: var(--border);
+    }
+    #grid-container > :not(:last-child) {
+        border-bottom: var(--border) solid var(--gameBorder);
+    }
+    .grid-row > :not(:last-child) {
+        border-right: var(--border) solid var(--gameBorder);
+    }
+    #game-header {
+        width: calc(60 * var(--min));
+        height: calc(15 * var(--min));
+        padding-bottom: calc(2 * var(--min));
+    }
+    #game-header > h1 {
+        font-size: calc(10 * var(--min));
+    }
+    .restart {
+        font-size: calc(3 * var(--min));
+        padding: 2px;
+        border: 1px solid var(--newGame);
+        border-radius: 3px;
+    }
+    .restart:hover {
+        border: 1px solid var(--title);
+    }
+    .restart:active {
+        background-color: var(--activeNewGame);
+    }
+    .game-tile {
+        width: calc((calc(75 * var(--min) - 30px) - 3 * var(--border)) / 4);
+        height: calc((calc(75 * var(--min) - 30px) - 3  * var(--border)) / 4);
+        font-size: calc(10 * var(--min));
+    }
+    .score-container {
+        font-size: calc(5 * var(--min));
+        padding-left: calc(5 * var(--min))
+    }
+    .score-container > * {
+        min-width: calc(15 * var(--min));
+        padding: 0;
+        padding-top: 2px;
+        border-radius: var(--min);
+    }
+    #current-score::before {
+        font-size: calc(3 * calc(5 * var(--min)) / 8)
+    }
+    #best-score::before {
+        font-size: calc(3 * calc(5 * var(--min)) / 8)
+    }
+}
+
+
+#game-over {
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    align-items: center;
+
+    z-index: 100;
+    background-color: rgb(250, 248, 239);
+}
