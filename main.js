@@ -95,7 +95,6 @@ async function createTile(value, y, x) {
     div.style.backgroundColor = `rgb(${(tileBg[value] || [0, 0, 0]).join(', ')})`
     if (`${value}`.length > 4) { div.style.fontSize = 'auto'}
 
-
     let parent = getParent(y, x)
     parent.appendChild(div)
 
@@ -407,7 +406,7 @@ window.addEventListener('keydown', (e) => {
 
 
 let start, end
-window.addEventListener('touchstart', (e) => start = [e.touches[0].clientX, e.touches[0].clientY])
+window.addEventListener('touchstart', (e) => { start = [e.touches[0].clientX, e.touches[0].clientY]; end = [e.touches[0].clientX, e.touches[0].clientY] })
 window.addEventListener('touchmove', (e) => end = [e.touches[0].clientX, e.touches[0].clientY] )
 window.addEventListener('touchend', (e) => {
     let dx = end[0] - start[0]
