@@ -5,6 +5,7 @@ const newGame = document.getElementById('newGame') // Geometry Dash Time Shell
 const currentScore = document.getElementById('current-score')
 const bestScore = document.getElementById('best-score')
 const boardSize = 4
+var normal = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight) / 45
 
 const tileBg = {
     2: [238,228,218],
@@ -27,7 +28,11 @@ const rotations = {
     'w': 0,
     'a': 1,
     's': 2,
-    'd': 3
+    'd': 3,
+    'arrowup': 0,
+    'arrowleft': 1,
+    'arrowdown': 2,
+    'arrowright': 3
 }
 const animationOfMerge = (element) => element.animate([
     { transform: 'scale(0)' },
@@ -50,7 +55,7 @@ const animationOfAdd = (element) => element.animate([
     duration: 350
 }).finished
 let board = Array.from(Array(boardSize), () => Array.from(Array(boardSize)).fill(0))
-let waitingForAnimation = false
+var waitingForAnimation = false
 let movement = {}
 let merges = []
 let totalScore = 0
@@ -346,12 +351,11 @@ function resetGame() {
     if (div) { container.removeChild(div) }
 }
 
-// Input
-document.addEventListener('keydown', (e) => {
-    let key = e.key.toLowerCase()
-    if (waitingForAnimation || !['w', 's', 'a', 'd'].includes(key)) { return }
+function inputMove(input) {
+    if (waitingForAnimation) { return }
+    let rotation = rotations[input]
+    if (rotation === undefined) { return }
 
-    let rotation = rotations[key]
     movement = {}
     merges = []
 
@@ -377,8 +381,6 @@ document.addEventListener('keydown', (e) => {
     runAnimations(animations).then(() => {
         addTile()
 
-        waitingForAnimation = false
-
         for (let y = 0; y < boardSize; y++) {
             for (let x = 0; x < boardSize; x++) {
                 if (!board[y][x]) { continue }
@@ -393,12 +395,41 @@ document.addEventListener('keydown', (e) => {
         } else {
             localStorage.setItem('board', board)
         }
+        waitingForAnimation = false
     })
+}
+
+// Input
+window.addEventListener('keydown', (e) => {
+    let key = e.key.toLowerCase()
+    inputMove(key)
 })
 
+
+let start, end
+window.addEventListener('touchstart', (e) => start = [e.touches[0].clientX, e.touches[0].clientY])
+window.addEventListener('touchmove', (e) => end = [e.touches[0].clientX, e.touches[0].clientY] )
+window.addEventListener('touchend', (e) => {
+    let dx = end[0] - start[0]
+    let dy = end[1] - start[1]
+    if (Math.sqrt(dx * dx + dy * dy) < normal) { return }
+    let input = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'd' : 'a') : (dy > 0 ? 's' : 'w')
+    inputMove(input)
+})
+window.addEventListener('mousedown', (e) => start = [e.clientX, e.clientY])
+window.addEventListener('mousemove', (e) => end = [e.clientX, e.clientY] )
+window.addEventListener('mouseup', () => {
+    let dx = end[0] - start[0]
+    let dy = end[1] - start[1]
+    if (Math.sqrt(dx * dx + dy * dy) < normal) { return }
+    let input = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'd' : 'a') : (dy > 0 ? 's' : 'w')
+    inputMove(input)
+})
+
+window.addEventListener('resize', () => normal = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight) / 45)
 newGame.addEventListener('click', resetGame)
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', () => {
     let save = localStorage.getItem('board')
     if (save) {
         loadBoard(save)
