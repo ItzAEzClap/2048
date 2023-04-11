@@ -28,16 +28,16 @@ body {
 }
 
 #game-container {
-    width: 500px;
-    height: 500px;
+    width: 530;
+    height: 530px;
     margin-top: 30px;
 }
 
 #grid-container {
     display: grid;
     grid-template-columns: repeat(1fr);
-    width: 470px;
-    height: 470px;
+    width: 500px;
+    height: 500px;
     border: 15px solid var(--gameBorder);
     border-radius: 15px;
     z-index: 1;
@@ -55,7 +55,6 @@ body {
 
 .grid-cell {
     display: flex;
-
     background-color: var(--gameBackground);
     width: 100%;
     height: 100%;
@@ -109,8 +108,8 @@ body {
     justify-content: center;
     align-items: center;
     font-weight: bold;
-    width: 106.25px;
-    height: 106.25px;
+    width: 113.75px;
+    height: 113.75px;
     z-index: 10;
     font-size: 65px;
 }
@@ -152,12 +151,11 @@ body {
     color: var(--scoreText);
 }
 
-
-@media (max-width: 450px), (max-height: 800px) {
+@media (max-width: 450px), (max-height: 700px) {
     #game-container {
         width: calc(60 * var(--min));
         height: calc(60 * var(--min));
-        margin-top: calc(5 * var(--min));
+        margin-top: calc(3 * var(--min));
         margin-bottom: 4vh;
     }
     #grid-container {
@@ -182,15 +180,15 @@ body {
         font-size: calc(10 * var(--min));
     }
     .restart {
-        font-size: calc(3 * var(--min));
+        font-size: calc(2 * var(--min));
         height: fit-content;
         width: fit-content;
-        padding: 2px;
-        border: 1px solid var(--newGame);
+        padding: calc(1 * var(--min));
+        border: calc(0.25 * var(--min)) solid var(--newGame);
         border-radius: var(--min);
     }
     .restart:hover {
-        border: 1px solid var(--title);
+        border: calc(0.25 * var(--min)) solid var(--title);
     }
     .restart:active {
         background-color: var(--activeNewGame);
@@ -220,7 +218,6 @@ body {
         font-size: calc(3 * calc(5 * var(--min)) / 8)
     }
 }
-
 
 #game-over {
     display: flex;

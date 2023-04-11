@@ -93,7 +93,6 @@ async function createTile(value, y, x) {
     div.dataset.x = x
     div.style.color = `rgb(${(tileColors[value] || [249, 246, 242]).join(', ')})`
     div.style.backgroundColor = `rgb(${(tileBg[value] || [0, 0, 0]).join(', ')})`
-    if (`${value}`.length > 4) { div.style.fontSize = 'auto'}
 
     let parent = getParent(y, x)
     parent.appendChild(div)
@@ -351,9 +350,8 @@ function resetGame() {
 }
 
 function inputMove(input) {
-    if (waitingForAnimation) { return }
     let rotation = rotations[input]
-    if (rotation === undefined) { return }
+    if (rotation === undefined || waitingForAnimation) { return }
 
     movement = {}
     merges = []
