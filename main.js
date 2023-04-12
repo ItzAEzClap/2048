@@ -297,23 +297,12 @@ async function gameOver() {
     let btn = document.createElement('button')
     div.appendChild(h1)
     div.appendChild(btn)
-    container.appendChild(div)
+    document.body.appendChild(div)
 
     /* Style */
-    // Div
-    let data = gameContainer.getBoundingClientRect()
-    console.log(data)
     div.id = 'game-over-box'
-    div.style.paddingTop = `${data.height * 0.25}px`
-    div.style.top = `${data.top + 20}px`
-    div.style.width = `${data.width}px`
-    div.style.height = `${0.75 * data.height}px`
-
-    // Text
     h1.id = 'game-over-text'
     h1.textContent = 'Game Over!'
-
-    // Restart
     btn.id = 'game-over-btn'
     btn.className = 'restart'
     btn.textContent = "Try again!";
@@ -329,7 +318,7 @@ async function gameOver() {
 
 function resetGame() {
     let gameOverDiv = document.getElementById('game-over-box')
-    try { container.removeChild(gameOverDiv) } catch {}
+    try { document.body.removeChild(gameOverDiv) } catch {}
 
     let cells = document.getElementsByClassName('grid-cell')
     for (let y = 0; y < boardSize; y++) {
