@@ -120,7 +120,7 @@ body {
     font-size: 40px;
     padding-left: 100px;
     width: 100%;
-    gap: 5px;
+    gap: 25px;
 }
 
 .score-container > * {
@@ -196,7 +196,7 @@ body {
     .game-tile {
         height: calc(15 * var(--min) - 5 / 4 * var(--border));
         width: calc(15 * var(--min) - 5 / 4 * var(--border));
-        font-size: calc(10 * var(--min));
+        font-size: calc(8 * var(--min));
     }
     .score-container {
         justify-content: right;
@@ -224,7 +224,6 @@ body {
     position: fixed;
     flex-direction: column;
     align-items: center;
-
     z-index: 100;
     background-color: rgb(250, 248, 239);
 }
