@@ -429,7 +429,7 @@ window.addEventListener('resize', () => {
     normal = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight) / 45
 })
 
-window.addEventListener('load', () => {
+window.addEventListener('DOMContentLoaded', () => {
     let save = localStorage.getItem('board')
     if (save) {
         loadBoard(save)
