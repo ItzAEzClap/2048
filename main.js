@@ -426,3 +426,11 @@ window.addEventListener('load', () => {
     currentScore.textContent = localStorage.getItem('current-score') || 0
     bestScore.textContent = localStorage.getItem('best-score') || 0
 })
+/*
+
+
+
+
+
+*/
+
