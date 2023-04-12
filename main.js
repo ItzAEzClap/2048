@@ -399,6 +399,7 @@ window.addEventListener('touchend', () => {
     if (Math.sqrt(dx * dx + dy * dy) < normal) { return }
     let input = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'd' : 'a') : (dy > 0 ? 's' : 'w')
     inputMove(input)
+    start = end = undefined
 })
 
 window.addEventListener('mousedown', (e) => start = [e.clientX, e.clientY])
@@ -408,6 +409,7 @@ window.addEventListener('mouseup', (e) => {
     if (Math.sqrt(dx * dx + dy * dy) < normal) { return }
     let input = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'd' : 'a') : (dy > 0 ? 's' : 'w')
     inputMove(input)
+    start = end = undefined
 })
 
 window.addEventListener('resize', () => normal = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight) / 45)
