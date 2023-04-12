@@ -6,7 +6,7 @@
     --newGame: rgb(143, 122, 102);
     --activeNewGame: rgb(135, 115, 90);
     --min: min(1vh, 1vw);
-    --border: calc(3 / 100 * 60 * var(--min)) /* Game Size To Border Ratio */
+    --border: calc(3 / 100 * 60 * var(--min)); /* Game Size To Border Ratio */
 }
 
 body {
@@ -26,13 +26,6 @@ body {
     user-select: none;
 }
 
-
-
-
-
-
-
-/* FIX */
 #game-container {
     width: calc(60 * var(--min));
     height: calc(60 * var(--min));
@@ -62,9 +55,9 @@ body {
 
 .grid-cell {
     display: flex;
-    background-color: var(--gameBackground);
     width: 100%;
     height: 100%;
+    background-color: var(--gameBackground);
 }
 
 .grid-row > :not(:last-child) {
@@ -83,25 +76,24 @@ body {
 }
 
 #game-header > h1 {
-    color: var(--title);
     font-size: calc(10 * var(--min));
+    color: var(--title);
 }
 
 .restart {
     all: unset;
-    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--newGame);
-    color: white;
-    font-weight: bold;
-    font-size: calc(11 / 4 * var(--min));
-    height: fit-content;
     width: fit-content;
+    height: fit-content;
     padding: calc(1 * var(--min));
     border: calc(var(--min) / 3) solid var(--newGame);
     border-radius: var(--min);
+    font-weight: bold;
+    font-size: calc(11 / 4 * var(--min));
+    background-color: var(--newGame);
+    color: white;
     z-index: 100;
 }
 
@@ -119,21 +111,20 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: calc(15 * var(--min) - 5 / 4 * var(--border));
+    height: calc(15 * var(--min) - 5 / 4 * var(--border));
     font-weight: bold;
     font-size: calc(7 * var(--min));
-    height: calc(15 * var(--min) - 5 / 4 * var(--border));
-    width: calc(15 * var(--min) - 5 / 4 * var(--border));
     z-index: 1;
 }
 
 .score-container {
     display: flex;
-    justify-content: space-evenly;
-    width: 100%;
     justify-content: right;
-    font-size: calc(5 * var(--min));
+    width: 100%;
     padding-left: 0px;
     gap: calc(2 * var(--min));
+    font-size: calc(5 * var(--min));
 }
 
 .score-container > * {
@@ -142,59 +133,59 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: white;
-    background-color: var(--gameBorder);    
     min-width: calc(15 * var(--min));
     width: fit-content;
     height: calc(8 * var(--min));
     padding: 0px;
     padding-top: var(--min);
     border-radius: var(--min);
+    color: white;
+    background-color: var(--gameBorder);
 }
 
 #current-score::before {
-    font-weight: bold;
     content: "SCORE";
+    font-weight: bold;
+    font-size: calc(3 * calc(5 * var(--min)) / 8);
     color: var(--scoreText);
-    font-size: calc(3 * calc(5 * var(--min)) / 8)
 }
 
 #best-score::before {
-    font-weight: bold;
     content: "BEST";
+    font-weight: bold;
+    font-size: calc(3 * calc(5 * var(--min)) / 8);
     color: var(--scoreText);
-    font-size: calc(3 * calc(5 * var(--min)) / 8)
 }
 
 #game-over-box {
     position: absolute;
-    width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: rgb(250, 248, 239);
+    width: 100%;
+    height: 100%;
     margin-top: calc(8 * var(--min));
     gap: calc(6 * var(--min));
+    background-color: rgb(250, 248, 239);
     z-index: 10;
 }
 
 #game-over-text {
+    text-align: center;
+    width: 100%;
+    font-size: calc(15 / 2 * var(--min));
     color: var(--title);
     z-index: 10;
-    width: 100%;
-    text-align: center;
-    font-size: calc(15 / 2 * var(--min));
 }
 
 #game-over-btn {
     display: flex;
-    width: fit-content;
-    z-index: 10;
     text-align: center;
+    width: fit-content;
     padding-left: calc(2 * var(--min));
     padding-right: calc(2 * var(--min));
     padding-top: calc(5 / 4 * var(--min));
     padding-bottom: calc(5 / 4 * var(--min));
+    z-index: 10;
 }
