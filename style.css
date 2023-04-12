@@ -180,7 +180,7 @@ body {
         font-size: calc(10 * var(--min));
     }
     .restart {
-        font-size: calc(2 * var(--min));
+        font-size: calc(3 * var(--min));
         height: fit-content;
         width: fit-content;
         padding: calc(1 * var(--min));
@@ -208,7 +208,7 @@ body {
         min-width: calc(15 * var(--min));
         height: calc(8 * var(--min));
         padding: 0px;
-        padding-top: 2px;
+        padding-top: var(--min);
         border-radius: var(--min);
     }
     #current-score::before {
