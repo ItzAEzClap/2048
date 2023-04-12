@@ -393,6 +393,7 @@ let start, end
 window.addEventListener('touchstart', (e) => start = [e.touches[0].clientX, e.touches[0].clientY])
 window.addEventListener('touchmove', (e) => end = [e.touches[0].clientX, e.touches[0].clientY])
 window.addEventListener('touchend', () => {
+    end = end || start
     let dx = end[0] - start[0]
     let dy = end[1] - start[1]
     if (Math.sqrt(dx * dx + dy * dy) < normal) { return }
