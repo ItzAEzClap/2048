@@ -6,7 +6,7 @@
     --newGame: rgb(143, 122, 102);
     --activeNewGame: rgb(135, 115, 90);
     --min: min(1vh, 1vw);
-    --border: calc(0.03 * 60 * var(--min)) /* Game Size To Border Ratio */
+    --border: calc(3 / 100 * 60 * var(--min)) /* Game Size To Border Ratio */
 }
 
 body {
@@ -30,7 +30,7 @@ body {
 #game-container {
     width: 530;
     height: 530px;
-    margin-top: 30px;
+    margin-top: 25px;
 }
 
 #grid-container {
@@ -70,13 +70,13 @@ body {
     height: 100px;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 30px;
+    padding-bottom: 25px;
     z-index: 100;
 }
 
 #game-header > h1 {
     color: var(--title);
-    font-size: 5rem;
+    font-size: 5.5rem;
 }
 
 .restart {
@@ -85,13 +85,16 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 8px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     border: 2px solid var(--newGame);
-    border-radius: 5px;
+    border-radius: 10px;
     background-color: var(--newGame);
     color: white;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 25px;
     z-index: 100;
 }
 
@@ -120,7 +123,7 @@ body {
     display: flex;
     justify-content: space-evenly;
     font-size: 40px;
-    padding-left: 100px;
+    padding-left: 60px;
     width: 100%;
     gap: 25px;
 }
@@ -130,13 +133,14 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
     padding: 5px;
     width: 50%;
-    min-width: 100px;
+    min-width: 120px;
+    height: 70px;
     color: white;
     background-color: var(--gameBorder);
-    border-radius: 5px;
-    width: fit-content;
+    border-radius: 10px;
 }
 
 #current-score::before {
@@ -152,7 +156,6 @@ body {
     content: "BEST";
     color: var(--scoreText);
 }
-/*------------FIX------------*/
 
 #game-over-box {
     position: absolute;
@@ -163,6 +166,8 @@ body {
     align-items: center;
     justify-content: center;
     background-color: rgb(250, 248, 239);
+    gap: 50px;
+    margin-top: 75px;
     z-index: 10;
 }
 
@@ -176,76 +181,103 @@ body {
 
 #game-over-btn {
     display: flex;
-    width: 100px;
-    height: 20px;
+    width: fit-content;
     z-index: 10;
     text-align: center;
 }
+/* FIX */
+#game-container {
+    width: calc(60 * var(--min));
+    height: calc(60 * var(--min));
+    margin-top: calc(3 * var(--min));
+    margin-bottom: 4vh;
+}
 
-@media (max-width: 800px), (max-height: 800px) {
-    #game-container {
-        width: calc(60 * var(--min));
-        height: calc(60 * var(--min));
-        margin-top: calc(3 * var(--min));
-        margin-bottom: 4vh;
-    }
-    #grid-container {
-        width: calc(100% - var(--border) * 2);
-        height: calc(100% - var(--border) * 2);
-        border: var(--border) solid var(--gameBorder);
-        border-radius: var(--border);
-    }
-    #grid-container > :not(:last-child) {
-        border-bottom: var(--border) solid var(--gameBorder);
-    }
-    .grid-row > :not(:last-child) {
-        border-right: var(--border) solid var(--gameBorder);
-    }
-    #game-header {
-        width: calc(60 * var(--min));
-        height: calc(15 * var(--min));
-        padding-bottom: calc(var(--min));
-        margin-top: 3vh;
-    }
-    #game-header > h1 {
-        font-size: calc(10 * var(--min));
-    }
-    .restart {
-        font-size: calc(3 * var(--min));
-        height: fit-content;
-        width: fit-content;
-        padding: calc(1 * var(--min));
-        border: calc(0.25 * var(--min)) solid var(--newGame);
-        border-radius: var(--min);
-    }
-    .restart:hover {
-        border: calc(0.25 * var(--min)) solid var(--title);
-    }
-    .restart:active {
-        background-color: var(--activeNewGame);
-    }
-    .game-tile {
-        height: calc(15 * var(--min) - 5 / 4 * var(--border));
-        width: calc(15 * var(--min) - 5 / 4 * var(--border));
-        font-size: calc(8 * var(--min));
-    }
-    .score-container {
-        justify-content: right;
-        font-size: calc(5 * var(--min));
-        padding-left: 0px;
-        gap: calc(2 * var(--min));
-    }
-    .score-container > * {
-        min-width: calc(15 * var(--min));
-        height: calc(8 * var(--min));
-        padding: 0px;
-        padding-top: var(--min);
-        border-radius: var(--min);
-    }
-    #current-score::before {
-        font-size: calc(3 * calc(5 * var(--min)) / 8)
-    }
-    #best-score::before {
-        font-size: calc(3 * calc(5 * var(--min)) / 8)
-    }
+#grid-container {
+    width: calc(100% - var(--border) * 2);
+    height: calc(100% - var(--border) * 2);
+    border: var(--border) solid var(--gameBorder);
+    border-radius: var(--border);
+}
+
+#grid-container > :not(:last-child) {
+    border-bottom: var(--border) solid var(--gameBorder);
+}
+
+.grid-row > :not(:last-child) {
+    border-right: var(--border) solid var(--gameBorder);
+}
+
+#game-header {
+    width: calc(60 * var(--min));
+    height: calc(15 * var(--min));
+    padding-bottom: calc(var(--min));
+    margin-top: 3vh;
+}
+
+#game-header > h1 {
+    font-size: calc(10 * var(--min));
+}
+
+.restart {
+    font-size: calc(11 / 4 * var(--min));
+    height: fit-content;
+    width: fit-content;
+    padding: calc(1 * var(--min));
+    border: calc(var(--min) / 3) solid var(--newGame);
+    border-radius: var(--min);
+}
+
+.restart:hover {
+    border: calc(var(--min) / 3) solid var(--title);
+}
+
+.restart:active {
+    background-color: var(--activeNewGame);
+}
+
+.game-tile {
+    height: calc(15 * var(--min) - 5 / 4 * var(--border));
+    width: calc(15 * var(--min) - 5 / 4 * var(--border));
+    font-size: calc(7 * var(--min));
+}
+
+.score-container {
+    justify-content: right;
+    font-size: calc(5 * var(--min));
+    padding-left: 0px;
+    gap: calc(2 * var(--min));
+}
+
+.score-container > * {
+    min-width: calc(15 * var(--min));
+    width: fit-content;
+    height: calc(8 * var(--min));
+    padding: 0px;
+    padding-top: var(--min);
+    border-radius: var(--min);
+}
+
+#current-score::before {
+    font-size: calc(3 * calc(5 * var(--min)) / 8)
+}
+
+#best-score::before {
+    font-size: calc(3 * calc(5 * var(--min)) / 8)
+}
+
+#game-over-box {
+    margin-top: calc(8 * var(--min));
+    gap: calc(6 * var(--min));
+}
+
+#game-over-text {
+    font-size: calc(15 / 2 * var(--min));
+}
+
+#game-over-btn {
+    padding-left: calc(2 * var(--min));
+    padding-right: calc(2 * var(--min));
+    padding-top: calc(5 / 4 * var(--min));
+    padding-bottom: calc(5 / 4 * var(--min));
 }

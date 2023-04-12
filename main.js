@@ -383,16 +383,24 @@ function inputMove(input) {
     })
 }
 
-// Input
+newGame.addEventListener('click', resetGame)
+/* Movement */
+// Keyboard
 window.addEventListener('keydown', (e) => {
     let key = e.key.toLowerCase()
     inputMove(key)
 })
 
 let start, end
-window.addEventListener('touchstart', (e) => start = [e.touches[0].clientX, e.touches[0].clientY])
+// Touch
+window.addEventListener('touchstart', (e) => {
+    if (e.target.nodeName !== 'BUTTON') {
+        start = [e.touches[0].clientX, e.touches[0].clientY]
+    }
+})
 window.addEventListener('touchmove', (e) => end = [e.touches[0].clientX, e.touches[0].clientY])
 window.addEventListener('touchend', () => {
+    if (!start) { return }
     end = end || start
     let dx = end[0] - start[0]
     let dy = end[1] - start[1]
@@ -401,9 +409,14 @@ window.addEventListener('touchend', () => {
     inputMove(input)
     start = end = undefined
 })
-
-window.addEventListener('mousedown', (e) => start = [e.clientX, e.clientY])
+// Mouse
+window.addEventListener('mousedown', (e) => {
+    if (e.target.nodeName !== 'BUTTON') {
+        start = [e.clientX, e.clientY]
+    }
+})
 window.addEventListener('mouseup', (e) => {
+    if (!start) { return }
     let dx = e.clientX - start[0]
     let dy = e.clientY - start[1]
     if (Math.sqrt(dx * dx + dy * dy) < normal) { return }
@@ -411,9 +424,10 @@ window.addEventListener('mouseup', (e) => {
     inputMove(input)
     start = end = undefined
 })
-
-window.addEventListener('resize', () => normal = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight) / 45)
-newGame.addEventListener('click', resetGame)
+/* General */
+window.addEventListener('resize', () => {
+    normal = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight) / 45
+})
 
 window.addEventListener('load', () => {
     let save = localStorage.getItem('board')
@@ -426,11 +440,3 @@ window.addEventListener('load', () => {
     currentScore.textContent = localStorage.getItem('current-score') || 0
     bestScore.textContent = localStorage.getItem('best-score') || 0
 })
-/*
-
-
-
-
-
-*/
-
