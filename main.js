@@ -1,6 +1,6 @@
 const container = document.getElementById('container')
 const gameContainer = document.getElementById('game-container')
-const gridContainer = document.getElementById('grid-container') // CURRENT SCORE ON CHANGE
+const gridContainer = document.getElementById('grid-container')
 const newGame = document.getElementById('newGame') // Geometry Dash Time Shell
 const currentScore = document.getElementById('current-score')
 const bestScore = document.getElementById('best-score')
@@ -22,7 +22,7 @@ const tileBg = {
 }
 const tileColors = {
     2: [119, 110, 101],
-    4: [119, 110, 101],
+    4: [119, 110, 101]
 }
 const rotations = {
     'w': 0,
