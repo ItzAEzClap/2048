@@ -5,8 +5,6 @@ const newGame = document.getElementById('newGame') // Geometry Dash Time Shell
 const currentScore = document.getElementById('current-score')
 const bestScore = document.getElementById('best-score')
 const boardSize = 4
-var normal = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight) / 45
-
 const tileBg = {
     2: [238,228,218],
     4: [238,225,201],
@@ -34,13 +32,7 @@ const rotations = {
     'arrowdown': 2,
     'arrowright': 3
 }
-const animationOfMerge = (element) => element.animate([
-    { transform: 'scale(0)' },
-    { transform: `scale(1.1)` },
-    { transform: 'scale(1)' }
-], {
-    duration: 100
-}).finished
+const animationOfMerge = (element) => element.animate({ transform: ['scale(0)', 'scale(1.1)', 'scale(1)'] }, { duration: 100 }).finished
 const animationOfMove = (element, dy, dx) => element.animate([
     { transform: 'translate(0px, 0px)' },
     { transform: `translate(${dx}px, ${dy}px)` }
@@ -54,11 +46,13 @@ const animationOfAdd = (element) => element.animate([
 ], {
     duration: 350
 }).finished
+let normal = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight) / 45
 let board = Array.from(Array(boardSize), () => Array.from(Array(boardSize)).fill(0))
-var waitingForAnimation = false
+let waitingForAnimation = false
 let movement = {}
 let merges = []
 let totalScore = 0
+let start
 
 // Game Tile
 function getChild(y, x) {
@@ -84,7 +78,7 @@ async function addTile() {
     return true
 }
 
-async function createTile(value, y, x) {
+function createTile(value, y, x) {
     board[y][x] = value
     let div = document.createElement('div')
     div.textContent = value
@@ -93,13 +87,11 @@ async function createTile(value, y, x) {
     div.dataset.x = x
     div.style.color = `rgb(${(tileColors[value] || [249, 246, 242]).join(', ')})`
     div.style.backgroundColor = `rgb(${(tileBg[value] || [0, 0, 0]).join(', ')})`
-    if (`${value}`.length > 4) { div.style.fontSize = 'auto'}
-
 
     let parent = getParent(y, x)
     parent.appendChild(div)
 
-    await animationOfMerge(div)
+    animationOfMerge(div)
 }
 
 // Rotation
@@ -300,31 +292,33 @@ function checkGameOver() {
 async function gameOver() {
     localStorage.removeItem('board')
     localStorage.removeItem('current-score')
-    // Background
+    // Create Structure
     let div = document.createElement('div')
-    let data = gameContainer.getBoundingClientRect()
-    div.id = 'game-over'
-    div.style.paddingTop = `${data.height * 0.25}px`
-    div.style.top = `${data.top}px`
-    div.style.width = `${data.width}px`
-    div.style.height = `${data.height * 0.75}px`
+    let h1 = document.createElement('h1')
+    let btn = document.createElement('button')
+    div.appendChild(h1)
+    div.appendChild(btn)
     container.appendChild(div)
 
+    /* Style */
+    // Div
+    let data = gameContainer.getBoundingClientRect()
+    console.log(data)
+    div.id = 'game-over-box'
+    div.style.paddingTop = `${data.height * 0.25}px`
+    div.style.top = `${data.top + 20}px`
+    div.style.width = `${data.width}px`
+    div.style.height = `${0.75 * data.height}px`
+
     // Text
-    let h1 = document.createElement('h1')
-    h1.style.fontSize = '65px'
-    h1.style.color = 'rgb(119, 110, 101)'
+    h1.id = 'game-over-text'
     h1.textContent = 'Game Over!'
-    div.appendChild(h1)
 
     // Restart
-    let btn = document.createElement('button')
-    btn.textContent = 'Try again'
-    btn.style.width = '100px'
-    btn.style.height = '20px'
+    btn.id = 'game-over-btn'
     btn.className = 'restart'
+    btn.textContent = "Try again!";
     btn.addEventListener('click', resetGame)
-    div.appendChild(btn)
 
     const options = { duration: 1000, fill: "forwards" }
     await Promise.all([
@@ -335,6 +329,9 @@ async function gameOver() {
 }
 
 function resetGame() {
+    let gameOverDiv = document.getElementById('game-over-box')
+    try { container.removeChild(gameOverDiv) } catch {}
+
     let cells = document.getElementsByClassName('grid-cell')
     for (let y = 0; y < boardSize; y++) {
         for (let x = 0; x < boardSize; x++) {
@@ -352,9 +349,8 @@ function resetGame() {
 }
 
 function inputMove(input) {
-    if (waitingForAnimation) { return }
     let rotation = rotations[input]
-    if (rotation === undefined) { return }
+    if (rotation === undefined || waitingForAnimation) { return }
 
     movement = {}
     merges = []
@@ -405,22 +401,20 @@ window.addEventListener('keydown', (e) => {
     inputMove(key)
 })
 
-
-let start, end
-window.addEventListener('touchstart', (e) => start = [e.touches[0].clientX, e.touches[0].clientY])
-window.addEventListener('touchmove', (e) => end = [e.touches[0].clientX, e.touches[0].clientY] )
+window.addEventListener('touchstart', (e) => { start = [e.touches[0].clientX, e.touches[0].clientY] })
 window.addEventListener('touchend', (e) => {
-    let dx = end[0] - start[0]
-    let dy = end[1] - start[1]
+    let touch = e.touches[0]
+    let dx = touch.clientX - start[0]
+    let dy = touch.clientY - start[1]
     if (Math.sqrt(dx * dx + dy * dy) < normal) { return }
     let input = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'd' : 'a') : (dy > 0 ? 's' : 'w')
     inputMove(input)
 })
+
 window.addEventListener('mousedown', (e) => start = [e.clientX, e.clientY])
-window.addEventListener('mousemove', (e) => end = [e.clientX, e.clientY] )
-window.addEventListener('mouseup', () => {
-    let dx = end[0] - start[0]
-    let dy = end[1] - start[1]
+window.addEventListener('mouseup', (e) => {
+    let dx = e.clientX - start[0]
+    let dy = e.clientY - start[1]
     if (Math.sqrt(dx * dx + dy * dy) < normal) { return }
     let input = Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'd' : 'a') : (dy > 0 ? 's' : 'w')
     inputMove(input)

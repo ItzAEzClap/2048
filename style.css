@@ -6,12 +6,11 @@
     --newGame: rgb(143, 122, 102);
     --activeNewGame: rgb(135, 115, 90);
     --min: min(1vh, 1vw);
-    --border: calc(0.03 * 75 * var(--min)) /* Game Size To Border Ratio */
+    --border: calc(0.03 * 60 * var(--min)) /* Game Size To Border Ratio */
 }
 
 body {
     margin: 0;
-    overflow: hidden;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
@@ -29,16 +28,16 @@ body {
 }
 
 #game-container {
-    width: 500px;
-    height: 500px;
+    width: 530;
+    height: 530px;
     margin-top: 30px;
 }
 
 #grid-container {
     display: grid;
     grid-template-columns: repeat(1fr);
-    width: 470px;
-    height: 470px;
+    width: 500px;
+    height: 500px;
     border: 15px solid var(--gameBorder);
     border-radius: 15px;
     z-index: 1;
@@ -46,7 +45,7 @@ body {
 
 .grid-row {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
 }
 
@@ -55,6 +54,7 @@ body {
 }
 
 .grid-cell {
+    display: flex;
     background-color: var(--gameBackground);
     width: 100%;
     height: 100%;
@@ -105,12 +105,11 @@ body {
 .game-tile {
     position: absolute;
     display: flex;
-    color: white;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     font-weight: bold;
-    width: 106.25px;
-    height: 106.25px;
+    width: 113.75px;
+    height: 113.75px;
     z-index: 10;
     font-size: 65px;
 }
@@ -152,16 +151,16 @@ body {
     color: var(--scoreText);
 }
 
-
-@media (max-width: 550px), (max-height: 800px) {
+@media (max-width: 800px), (max-height: 800px) {
     #game-container {
-        width: 75 * var(--min);
-        height: 75 * var(--min);
-        margin-top: calc(2 * var(--min));
+        width: calc(60 * var(--min));
+        height: calc(60 * var(--min));
+        margin-top: calc(3 * var(--min));
+        margin-bottom: 4vh;
     }
     #grid-container {
-        width: calc(75 * var(--min) - 30px);
-        height: calc(75 * var(--min) - 30px);
+        width: calc(100% - var(--border) * 2);
+        height: calc(100% - var(--border) * 2);
         border: var(--border) solid var(--gameBorder);
         border-radius: var(--border);
     }
@@ -174,35 +173,41 @@ body {
     #game-header {
         width: calc(60 * var(--min));
         height: calc(15 * var(--min));
-        padding-bottom: calc(2 * var(--min));
+        padding-bottom: calc(var(--min));
+        margin-top: 3vh;
     }
     #game-header > h1 {
         font-size: calc(10 * var(--min));
     }
     .restart {
-        font-size: calc(3 * var(--min));
-        padding: 2px;
-        border: 1px solid var(--newGame);
-        border-radius: 3px;
+        font-size: calc(2 * var(--min));
+        height: fit-content;
+        width: fit-content;
+        padding: calc(1 * var(--min));
+        border: calc(0.25 * var(--min)) solid var(--newGame);
+        border-radius: var(--min);
     }
     .restart:hover {
-        border: 1px solid var(--title);
+        border: calc(0.25 * var(--min)) solid var(--title);
     }
     .restart:active {
         background-color: var(--activeNewGame);
     }
     .game-tile {
-        width: calc((calc(75 * var(--min) - 30px) - 3 * var(--border)) / 4);
-        height: calc((calc(75 * var(--min) - 30px) - 3  * var(--border)) / 4);
+        height: calc(15 * var(--min) - 5 / 4 * var(--border));
+        width: calc(15 * var(--min) - 5 / 4 * var(--border));
         font-size: calc(10 * var(--min));
     }
     .score-container {
+        justify-content: right;
         font-size: calc(5 * var(--min));
-        padding-left: calc(5 * var(--min))
+        padding-left: 0px;
+        gap: calc(2 * var(--min));
     }
     .score-container > * {
         min-width: calc(15 * var(--min));
-        padding: 0;
+        height: calc(8 * var(--min));
+        padding: 0px;
         padding-top: 2px;
         border-radius: var(--min);
     }
@@ -214,8 +219,7 @@ body {
     }
 }
 
-
-#game-over {
+#game-over-box {
     display: flex;
     position: fixed;
     flex-direction: column;
@@ -223,4 +227,14 @@ body {
 
     z-index: 100;
     background-color: rgb(250, 248, 239);
+}
+
+#game-over-text {
+    font-size: 65px;
+    color: var(--title);
+}
+
+#game-over-btn {
+    width: 100px;
+    height: 20px;
 }
