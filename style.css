@@ -14,7 +14,6 @@ body {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-/*Container*/
 #container {
     position: absolute;
     display: flex;
@@ -27,19 +26,27 @@ body {
     user-select: none;
 }
 
+
+
+
+
+
+
+/* FIX */
 #game-container {
-    width: 530;
-    height: 530px;
-    margin-top: 25px;
+    width: calc(60 * var(--min));
+    height: calc(60 * var(--min));
+    margin-top: calc(3 * var(--min));
+    margin-bottom: 4vh;
 }
 
 #grid-container {
     display: grid;
     grid-template-columns: repeat(1fr);
-    width: 500px;
-    height: 500px;
-    border: 15px solid var(--gameBorder);
-    border-radius: 15px;
+    width: calc(100% - var(--border) * 2);
+    height: calc(100% - var(--border) * 2);
+    border: var(--border) solid var(--gameBorder);
+    border-radius: var(--border);
     z-index: 0;
 }
 
@@ -50,7 +57,7 @@ body {
 }
 
 #grid-container > :not(:last-child) {
-    border-bottom: 15px solid var(--gameBorder);
+    border-bottom: var(--border) solid var(--gameBorder);
 }
 
 .grid-cell {
@@ -61,22 +68,23 @@ body {
 }
 
 .grid-row > :not(:last-child) {
-    border-right: 15px solid var(--gameBorder);
+    border-right: var(--border) solid var(--gameBorder);
 }
 
 #game-header {
     display: flex;
-    width: 500px;
-    height: 100px;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 25px;
+    width: calc(60 * var(--min));
+    height: calc(15 * var(--min));
+    padding-bottom: calc(var(--min));
+    margin-top: 3vh;
     z-index: 100;
 }
 
 #game-header > h1 {
     color: var(--title);
-    font-size: 5.5rem;
+    font-size: calc(10 * var(--min));
 }
 
 .restart {
@@ -85,22 +93,21 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border: 2px solid var(--newGame);
-    border-radius: 10px;
     background-color: var(--newGame);
     color: white;
     font-weight: bold;
-    font-size: 25px;
+    font-size: calc(11 / 4 * var(--min));
+    height: fit-content;
+    width: fit-content;
+    padding: calc(1 * var(--min));
+    border: calc(var(--min) / 3) solid var(--newGame);
+    border-radius: var(--min);
     z-index: 100;
 }
 
 .restart:hover {
     cursor: pointer;
-    border: 2px solid var(--title);
+    border: calc(var(--min) / 3) solid var(--title);
 }
 
 .restart:active {
@@ -113,19 +120,20 @@ body {
     justify-content: center;
     align-items: center;
     font-weight: bold;
-    width: 113.75px;
-    height: 113.75px;
+    font-size: calc(7 * var(--min));
+    height: calc(15 * var(--min) - 5 / 4 * var(--border));
+    width: calc(15 * var(--min) - 5 / 4 * var(--border));
     z-index: 1;
-    font-size: 65px;
 }
 
 .score-container {
     display: flex;
     justify-content: space-evenly;
-    font-size: 40px;
-    padding-left: 60px;
     width: 100%;
-    gap: 25px;
+    justify-content: right;
+    font-size: calc(5 * var(--min));
+    padding-left: 0px;
+    gap: calc(2 * var(--min));
 }
 
 .score-container > * {
@@ -134,27 +142,28 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 5px;
-    width: 50%;
-    min-width: 120px;
-    height: 70px;
     color: white;
-    background-color: var(--gameBorder);
-    border-radius: 10px;
+    background-color: var(--gameBorder);    
+    min-width: calc(15 * var(--min));
+    width: fit-content;
+    height: calc(8 * var(--min));
+    padding: 0px;
+    padding-top: var(--min);
+    border-radius: var(--min);
 }
 
 #current-score::before {
-    font-size: 15px;
     font-weight: bold;
     content: "SCORE";
     color: var(--scoreText);
+    font-size: calc(3 * calc(5 * var(--min)) / 8)
 }
 
 #best-score::before {
-    font-size: 15px;
     font-weight: bold;
     content: "BEST";
     color: var(--scoreText);
+    font-size: calc(3 * calc(5 * var(--min)) / 8)
 }
 
 #game-over-box {
@@ -166,17 +175,17 @@ body {
     align-items: center;
     justify-content: center;
     background-color: rgb(250, 248, 239);
-    gap: 50px;
-    margin-top: 75px;
+    margin-top: calc(8 * var(--min));
+    gap: calc(6 * var(--min));
     z-index: 10;
 }
 
 #game-over-text {
-    font-size: 65px;
     color: var(--title);
     z-index: 10;
     width: 100%;
     text-align: center;
+    font-size: calc(15 / 2 * var(--min));
 }
 
 #game-over-btn {
@@ -184,98 +193,6 @@ body {
     width: fit-content;
     z-index: 10;
     text-align: center;
-}
-/* FIX */
-#game-container {
-    width: calc(60 * var(--min));
-    height: calc(60 * var(--min));
-    margin-top: calc(3 * var(--min));
-    margin-bottom: 4vh;
-}
-
-#grid-container {
-    width: calc(100% - var(--border) * 2);
-    height: calc(100% - var(--border) * 2);
-    border: var(--border) solid var(--gameBorder);
-    border-radius: var(--border);
-}
-
-#grid-container > :not(:last-child) {
-    border-bottom: var(--border) solid var(--gameBorder);
-}
-
-.grid-row > :not(:last-child) {
-    border-right: var(--border) solid var(--gameBorder);
-}
-
-#game-header {
-    width: calc(60 * var(--min));
-    height: calc(15 * var(--min));
-    padding-bottom: calc(var(--min));
-    margin-top: 3vh;
-}
-
-#game-header > h1 {
-    font-size: calc(10 * var(--min));
-}
-
-.restart {
-    font-size: calc(11 / 4 * var(--min));
-    height: fit-content;
-    width: fit-content;
-    padding: calc(1 * var(--min));
-    border: calc(var(--min) / 3) solid var(--newGame);
-    border-radius: var(--min);
-}
-
-.restart:hover {
-    border: calc(var(--min) / 3) solid var(--title);
-}
-
-.restart:active {
-    background-color: var(--activeNewGame);
-}
-
-.game-tile {
-    height: calc(15 * var(--min) - 5 / 4 * var(--border));
-    width: calc(15 * var(--min) - 5 / 4 * var(--border));
-    font-size: calc(7 * var(--min));
-}
-
-.score-container {
-    justify-content: right;
-    font-size: calc(5 * var(--min));
-    padding-left: 0px;
-    gap: calc(2 * var(--min));
-}
-
-.score-container > * {
-    min-width: calc(15 * var(--min));
-    width: fit-content;
-    height: calc(8 * var(--min));
-    padding: 0px;
-    padding-top: var(--min);
-    border-radius: var(--min);
-}
-
-#current-score::before {
-    font-size: calc(3 * calc(5 * var(--min)) / 8)
-}
-
-#best-score::before {
-    font-size: calc(3 * calc(5 * var(--min)) / 8)
-}
-
-#game-over-box {
-    margin-top: calc(8 * var(--min));
-    gap: calc(6 * var(--min));
-}
-
-#game-over-text {
-    font-size: calc(15 / 2 * var(--min));
-}
-
-#game-over-btn {
     padding-left: calc(2 * var(--min));
     padding-right: calc(2 * var(--min));
     padding-top: calc(5 / 4 * var(--min));
