@@ -18,10 +18,12 @@ const tileBg = {
     1024: [237, 197, 63],
     2048: [237, 194, 46]
 }
+
 const tileColors = {
     2: [119, 110, 101],
     4: [119, 110, 101]
 }
+
 const rotations = {
     'w': 0,
     'a': 1,
@@ -32,8 +34,10 @@ const rotations = {
     'arrowdown': 2,
     'arrowright': 3
 }
+
 const animationOfMerge = (element) => 
 element.animate({ transform: ['scale(0)', 'scale(1.1)', 'scale(1)'] }, { duration: 100 }).finished
+
 const animationOfMove = (element, dy, dx) => element.animate([
     { transform: 'translate(0px, 0px)' },
     { transform: `translate(${dx}px, ${dy}px)` }
@@ -41,10 +45,12 @@ const animationOfMove = (element, dy, dx) => element.animate([
     duration: 100,
     easing: 'cubic-bezier(0.70, 0, 0.55, 0.50)',
 }).finished
+
 const animationOfAdd = (element) => element.animate([
     { transform: 'translate(0px, 0px)', opacity: 1 },
-    { transform: 'translate(0px, -100px)', opacity: 0 }
-], { duration: 350 }).finished
+    { transform: `translate(0px, ${getComputedStyle(document.documentElement).getPropertyValue('--javascriptMin')}`, opacity: 0 }
+], { duration: 400 }).finished
+/*-------------------------*/
 let normal = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight) / 45
 let board = Array.from(Array(boardSize), () => Array.from(Array(boardSize)).fill(0))
 let waitingForAnimation = false
@@ -156,16 +162,10 @@ function merge() {
 }
 
 // Animation
-async function addAnimation(score) {
+async function playScoreAnimation(score) {
     let h2 = document.createElement('h2')
     h2.textContent = `+${score}`
-    h2.anim
-    h2.style.position = 'absolute'
-    h2.id = 'score'
-    h2.style.marginTop = '100px'
-    h2.style.fontSize = '30px'
-    h2.style.color = 'rgb(119, 110, 101)'
-    h2.style.backgroundColor = 'rgba(0, 0, 0, 0)'
+    h2.className = 'add-score'
     
     currentScore.appendChild(h2)
     await animationOfAdd(h2)
@@ -256,7 +256,7 @@ async function runAnimations(animations) {
     localStorage.setItem('current-score', currentScore.textContent)
     localStorage.setItem('best-score', bestScore.textContent)
 
-    if (totalScore) { addAnimation(totalScore) }
+    if (totalScore) { playScoreAnimation(totalScore) }
     totalScore = 0
 }
 
@@ -372,7 +372,7 @@ async function inputMove(input) {
             child.dataset.x = x
         }
     }
-    if (checkGameOver()) { // GAME OVER ANIMATION
+    if (checkGameOver()) {
         gameOver()
     } else {
         localStorage.setItem('board', board)

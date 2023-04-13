@@ -7,6 +7,7 @@
     --activeNewGame: rgb(135, 115, 90);
     --min: min(1vh, 1vw);
     --border: calc(3 / 100 * 60 * var(--min)); /* Game Size To Border Ratio */
+    --javascriptMin: calc(-15 * var(--min));
 }
 
 body {
@@ -149,7 +150,7 @@ body {
 
 .score-container > *::before {
     font-weight: bold;
-    font-size: calc(3 * calc(5 * var(--min)) / 8);
+    font-size: calc(15 * var(--min) / 8);
     color: var(--scoreText);
 }
 
@@ -193,4 +194,12 @@ body {
     padding-top: calc(5 / 4 * var(--min));
     padding-bottom: calc(5 / 4 * var(--min));
     z-index: 10;
+}
+
+.add-score {
+    position: absolute;
+    margin-top: calc(15 * var(--min));
+    font-size: calc(7 * var(--min) / 2);
+    color: var(--title);
+    background-color: rgba(0, 0, 0, 0);
 }
