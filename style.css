@@ -25,6 +25,7 @@ body {
     height: 100%;
     background-color: rgb(250,248,239);
     user-select: none;
+    pointer-events: none;
 }
 
 #game-container {
