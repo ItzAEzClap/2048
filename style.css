@@ -10,9 +10,9 @@
 }
 
 body {
-    margin: 0;
     overflow: hidden;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin: 0;
 }
 
 #container {
@@ -24,8 +24,12 @@ body {
     width: 100%;
     height: 100%;
     background-color: rgb(250,248,239);
-    user-select: none;
-    pointer-events: none;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
 }
 
 #game-container {
@@ -124,7 +128,6 @@ body {
     display: flex;
     justify-content: right;
     width: 100%;
-    padding-left: 0px;
     gap: calc(2 * var(--min));
     font-size: calc(5 * var(--min));
 }
@@ -138,25 +141,25 @@ body {
     min-width: calc(15 * var(--min));
     width: fit-content;
     height: calc(8 * var(--min));
-    padding: 0px;
     padding-top: var(--min);
     border-radius: var(--min);
     color: white;
     background-color: var(--gameBorder);
 }
 
-#current-score::before {
-    content: "SCORE";
+.score-container > *::before {
     font-weight: bold;
     font-size: calc(3 * calc(5 * var(--min)) / 8);
     color: var(--scoreText);
 }
 
+#current-score::before {
+    content: "SCORE";
+    
+}
+
 #best-score::before {
     content: "BEST";
-    font-weight: bold;
-    font-size: calc(3 * calc(5 * var(--min)) / 8);
-    color: var(--scoreText);
 }
 
 #game-over-box {

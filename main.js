@@ -32,7 +32,8 @@ const rotations = {
     'arrowdown': 2,
     'arrowright': 3
 }
-const animationOfMerge = (element) => element.animate({ transform: ['scale(0)', 'scale(1.1)', 'scale(1)'] }, { duration: 100 }).finished
+const animationOfMerge = (element) => 
+element.animate({ transform: ['scale(0)', 'scale(1.1)', 'scale(1)'] }, { duration: 100 }).finished
 const animationOfMove = (element, dy, dx) => element.animate([
     { transform: 'translate(0px, 0px)' },
     { transform: `translate(${dx}px, ${dy}px)` }
@@ -43,9 +44,7 @@ const animationOfMove = (element, dy, dx) => element.animate([
 const animationOfAdd = (element) => element.animate([
     { transform: 'translate(0px, 0px)', opacity: 1 },
     { transform: 'translate(0px, -100px)', opacity: 0 }
-], {
-    duration: 350
-}).finished
+], { duration: 350 }).finished
 let normal = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight) / 45
 let board = Array.from(Array(boardSize), () => Array.from(Array(boardSize)).fill(0))
 let waitingForAnimation = false
@@ -173,12 +172,12 @@ async function addAnimation(score) {
     try { currentScore.removeChild(h2) } catch {}
 }
 
-async function mergeAnimation(y1, x1, y2, x2, y3, x3) { // y1 x1 First, y2 x2 Second, y3 x3 Destination
+async function playMergeAnimation(y1, x1, y2, x2, y3, x3) { // y1 x1 First, y2 x2 Second, y3 x3 Destination
     let main = getChild(y1, x1)
     let secondary = getChild(y2, x2)
     let parent = getParent(y3, x3)
 
-    await Promise.all([moveAnimation(y1, x1, y3, x3), moveAnimation(y2, x2, y3, x3)])
+    await Promise.all([playMoveAnimation(y1, x1, y3, x3), playMoveAnimation(y2, x2, y3, x3)])
     parent.removeChild(secondary)
 
     main.textContent *= 2
@@ -193,7 +192,7 @@ async function mergeAnimation(y1, x1, y2, x2, y3, x3) { // y1 x1 First, y2 x2 Se
     await animationOfMerge(main)
 }
 
-async function moveAnimation(y1, x1, y2, x2) {
+async function playMoveAnimation(y1, x1, y2, x2) {
     let oldParent = getParent(y1, x1)
     let newParent = getParent(y2, x2)
     let element =  getChild(y1, x1)
@@ -216,7 +215,7 @@ function createAnimations() {
         let from = merge[0]
         let into = merge[1]
 
-        animations.push(['mergeAnimation', [...from, ...into, ...movement[into]]])
+        animations.push(['playMergeAnimation', [...from, ...into, ...movement[into]]])
 
         delete movement[from]
         delete movement[into]
@@ -225,7 +224,7 @@ function createAnimations() {
     for (let [key, value] of Object.entries(movement)) {
         if (key !== value.join(',')) {
             key = key.split(',').map(e => parseInt(e))
-            animations.push(['moveAnimation', [...key, ...value]])
+            animations.push(['playMoveAnimation', [...key, ...value]])
         }
     }
     return animations
@@ -236,7 +235,7 @@ function rotateAnimations(animations, rotation) {
         let [y1, x1] = rotatePoint(animations[j][1][0], animations[j][1][1], rotation)
         let [y2, x2] = rotatePoint(animations[j][1][2], animations[j][1][3], rotation)
 
-        if (animations[j][0] === 'mergeAnimation') {
+        if (animations[j][0] === 'playMergeAnimation') {
             let [y3, x3] = rotatePoint(animations[j][1][4], animations[j][1][5], rotation)
             animations[j][1] = [y1, x1, y2, x2, y3, x3]
         } else {
@@ -336,7 +335,7 @@ function resetGame() {
     if (div) { container.removeChild(div) }
 }
 
-function inputMove(input) {
+async function inputMove(input) {
     let rotation = rotations[input]
     if (rotation === undefined || waitingForAnimation) { return }
 
@@ -362,25 +361,23 @@ function inputMove(input) {
     if (!animations.length) { return }
 
     waitingForAnimation = true
-    runAnimations(animations).then(() => {
-        addTile()
+    await runAnimations(animations)
+    addTile()
 
-        for (let y = 0; y < boardSize; y++) {
-            for (let x = 0; x < boardSize; x++) {
-                if (!board[y][x]) { continue }
-                let child = getChild(y, x)
-                child.dataset.y = y
-                child.dataset.x = x
-            }
+    for (let y = 0; y < boardSize; y++) {
+        for (let x = 0; x < boardSize; x++) {
+            if (!board[y][x]) { continue }
+            let child = getChild(y, x)
+            child.dataset.y = y
+            child.dataset.x = x
         }
-
-        if (checkGameOver()) { // GAME OVER ANIMATION
-            gameOver()
-        } else {
-            localStorage.setItem('board', board)
-        }
-        waitingForAnimation = false
-    })
+    }
+    if (checkGameOver()) { // GAME OVER ANIMATION
+        gameOver()
+    } else {
+        localStorage.setItem('board', board)
+    }
+    waitingForAnimation = false
 }
 
 newGame.addEventListener('click', resetGame)
