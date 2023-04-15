@@ -214,7 +214,7 @@ async function playMoveAnimation(y1, x1, y2, x2) {
         { transform: 'translate(0px, 0px)' },
         { transform: `translate(${dx}px, ${dy}px)` }
     ], {
-        duration: 100,
+        duration: 500,
         easing: 'cubic-bezier(0.70, 0, 0.55, 0.50)',
     })
     element.style.webkitAnimation = asda
