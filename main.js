@@ -210,7 +210,15 @@ async function playMoveAnimation(y1, x1, y2, x2) {
     let dy = newPosition.top - initialPosition.top
     let dx = newPosition.left - initialPosition.left
 
-    await animationOfMove(element, dy, dx)
+    const animationOfMove = (element, dy, dx) => element.animate([
+        { transform: 'translate(0px, 0px)' },
+        { transform: `translate(${dx}px, ${dy}px)` }
+    ], {
+        duration: 100,
+        easing: 'cubic-bezier(0.70, 0, 0.55, 0.50)',
+    })
+    element.style.animation = animationOfMove
+
     newParent.appendChild(element)
 }
 
