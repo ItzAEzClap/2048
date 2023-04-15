@@ -217,7 +217,7 @@ async function playMoveAnimation(y1, x1, y2, x2) {
         duration: 100,
         easing: 'cubic-bezier(0.70, 0, 0.55, 0.50)',
     })
-    element.style.animation = asda
+    element.style.webkitAnimation = asda
     await new Promise(resolve => setTimeout(resolve, 100))
     newParent.appendChild(element)
 }
