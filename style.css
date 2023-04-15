@@ -8,10 +8,6 @@
     --min: min(1vh, 1vw);
     --border: calc(3 / 100 * 60 * var(--min)); /* Game Size To Border Ratio */
     --javascriptMin: calc(-15 * var(--min));
-    /* Dynamic Animations */
-    --green: green;
-    --blue: blue;
-    --yellow: yellow; 
 }
 
 body {
@@ -206,11 +202,4 @@ body {
     font-size: calc(7 * var(--min) / 2);
     color: var(--title);
     background-color: rgba(0, 0, 0, 0);
-}
-
-
-@keyframes anim {
-    0% { background-color: var(--green); }
-    25% { background-color: var(--blue); }
-    50% { background-color: var(--yellow); }
 }
