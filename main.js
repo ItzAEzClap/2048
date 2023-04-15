@@ -442,16 +442,3 @@ window.addEventListener('DOMContentLoaded', () => {
     currentScore.textContent = localStorage.getItem('current-score') || 0
     bestScore.textContent = localStorage.getItem('best-score') || 0
 })
-
-
-
-window.addEventListener('load', () => {
-    const animation = newGame.animate(
-        [
-            { transform: 'translate(0, 600px)' }
-        ],
-        { duration: 1000, easing: 'linear' }
-    )
-        newGame.style.animation = animation
-})
-
