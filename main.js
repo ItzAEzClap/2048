@@ -452,6 +452,6 @@ window.addEventListener('load', () => {
         ],
         { duration: 1000, easing: 'linear' }
     )
-        newGame.style.webkitAnimation = animation
+        newGame.style.animation = animation
 })
 
