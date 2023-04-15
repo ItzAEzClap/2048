@@ -210,15 +210,7 @@ async function playMoveAnimation(y1, x1, y2, x2) {
     let dy = newPosition.top - initialPosition.top
     let dx = newPosition.left - initialPosition.left
 
-    let asda = element.animate([
-        { transform: 'translate(0px, 0px)' },
-        { transform: `translate(${dx}px, ${dy}px)` }
-    ], {
-        duration: 500,
-        easing: 'cubic-bezier(0.70, 0, 0.55, 0.50)',
-    })
-    element.style.webkitAnimation = asda
-    await new Promise(resolve => setTimeout(resolve, 100))
+    await animationOfMove(element, dy, dx)
     newParent.appendChild(element)
 }
 
