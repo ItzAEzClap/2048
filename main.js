@@ -58,6 +58,11 @@ let movement = {}
 let merges = []
 let totalScore = 0
 
+function createKeyframes(type) {
+    let prefix = ""
+    if (type === '') {}
+}
+
 // Game Tile
 function getChild(y, x) {
     return getParent(y, x).childNodes[0]
@@ -437,3 +442,16 @@ window.addEventListener('DOMContentLoaded', () => {
     currentScore.textContent = localStorage.getItem('current-score') || 0
     bestScore.textContent = localStorage.getItem('best-score') || 0
 })
+
+
+
+window.addEventListener('load', () => {
+    const animation = newGame.animate(
+        [
+            { transform: 'translate(0, 600px)' }
+        ],
+        { duration: 1000, easing: 'linear' }
+    )
+        newGame.style.webkitAnimation = animation
+})
+
